@@ -69,7 +69,7 @@ const CustomDrawer = (props) => {
         <List>
           {[{name: 'Inbox', url:'/AllChats'}, {name: 'Contacts', url:'/Contacts'}, {name: 'Create a group', url:'createGroup'},
           {name: 'Log Out', url:'/'},].map((text, index) => (
-            <ListItem key={text} disablePadding sx={{ display: 'block' }}>
+            <ListItem key={text.url} disablePadding sx={{ display: 'block' }}>
               <ListItemButton
                 sx={{
                   minHeight: 48,

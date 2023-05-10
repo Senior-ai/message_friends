@@ -29,8 +29,18 @@ const GroupType = new GraphQLObjectType({
         id: {type: GraphQLString},
         groupName: {type:GraphQLString},
         groupPic: {type:GraphQLString},
-        users: {type: GraphQLList},
-        messages: {type: GraphQLList}
+        users: {type: GraphQLList(GraphQLString)},
+        messages: {type: GraphQLList(GraphQLString)}
     }
 })
-module.exports = {UserType, MessageType, GroupType}
+
+const ChatType = new GraphQLObjectType({
+    name: "Chat",
+    fields: {
+        id: {type: GraphQLString},
+        senderId: {type: GraphQLString},
+        receiverId: {type: GraphQLString},
+        messages: {type: GraphQLList(GraphQLString)}
+    }
+})
+module.exports = {UserType, MessageType, GroupType, ChatType}

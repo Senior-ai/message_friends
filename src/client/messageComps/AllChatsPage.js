@@ -1,6 +1,7 @@
 import React from 'react'
 import BarComp from './barComp';
 import TextsList from './textsList';
+
 const AllChatsPage = () => {
 
     const filterChats = () => {

@@ -11,6 +11,14 @@ import { useQuery } from '@apollo/client';
 import { ListItemButton } from '@mui/material';
 
 const TextsList = () => {
+ const GET_CHATS = gql`
+  query getAllGroups {
+    id
+    messages
+    groupPic
+    groupName
+    users  
+  }`;
   return (
     <List sx={{ padding: '10px', marginTop: '70px',
     marginLeft:'70px', width: '100%', maxWidth:1200 ,bgcolor: 'background.paper' }}>

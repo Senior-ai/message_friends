@@ -23,7 +23,7 @@ const groupSchema = new GraphQLSchema({
             getAllGroups: {
                 type: GraphQLList(GroupType),
                 resolve: (root, args, context, info) => {
-                    return GroupModel.find().exec();
+                    return GroupModel.find();
                 }
             },
             //Query #2
