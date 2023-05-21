@@ -4,7 +4,7 @@ const chatSchema = new mongoose.Schema({
     senderId: String,
     receiverId: String,
     messages: [{type: mongoose.Schema.Types.ObjectId, ref: 'message'}],
-})
+},{versionKey: false})
 
-const Message = mongoose.model('message', chatSchema);
-module.exports = Message;
+const ChatModel = mongoose.model('chat', chatSchema);
+module.exports = ChatModel;

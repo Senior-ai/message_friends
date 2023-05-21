@@ -3,9 +3,8 @@ const mongoose = require('mongoose');
 const messageSchema = new mongoose.Schema({
     time: String,
     body: String,
-    senderId: String,
-    receiverId: String
+    senderId: String
 })
 
-const Message = mongoose.model('message', messageSchema);
-module.exports = Message;
+const MessageModel = mongoose.model('message', messageSchema);
+module.exports = MessageModel;

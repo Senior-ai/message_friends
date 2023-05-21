@@ -1,16 +1,25 @@
 const {GraphQLID, GraphQLString,
     GraphQLList, GraphQLType, GraphQLSchema,
     GraphQLNonNull, GraphQLObjectType, GraphQLInputObjectType} = require('graphql');
-const { ChatType } = require('../models/graphQLModels');
-const ChatModel = require('../models/userModel');
+const { ChatType, MessageType } = require('../models/graphQLModels');
+const ChatModel = require('../models/chatModel');
+const MessageModel = require('../models/messageModel')
 const mongoose = require('mongoose');
 
+const MessageInputType = new GraphQLInputObjectType({
+    name: 'MessageInput',
+    fields: {
+      id: { type: GraphQLID },
+      time: { type: GraphQLString },
+      body: { type: GraphQLString },
+      senderId: { type: GraphQLString },
+}});
 const chatObjectType = new GraphQLInputObjectType({
     name: 'ChatObject',
     fields: {
         senderId: { type: GraphQLString },
         recerverId: { type: GraphQLString },
-        messages: {type: GraphQLList(GraphQLNonNull(GraphQLString))}
+        messages: {type: GraphQLList(MessageInputType)}
     }
 });
 
@@ -22,7 +31,7 @@ const chatSchema = new GraphQLSchema({
             getAllChats: {
                 type: GraphQLList(ChatType),
                 resolve: (root, args, context, info) => {
-                    return ChatModel.find().exec();
+                    return ChatModel.find().populate({path: 'messages', select: 'time body senderId'})
                 }
             },
             //Query #2
@@ -36,19 +45,17 @@ const chatSchema = new GraphQLSchema({
         },
         //Query #3
         getChatsByUserID: {
-            args: {id: {type: GraphQLNonNull(GraphQLID)}},
+            type: GraphQLList(ChatType),
+            args: {id: {type: GraphQLString}},
             resolve: (root, args, context, info) => {
                 console.log(args.id);
-                try {
-                    return ChatModel.find({$or: [{senderId: args.id}, {receiverId: args.id}]});
-                } catch (error) {
-                    console.error(error);
-                    throw new Error('Failed to fetch chats by UserID');
+                return ChatModel.find({$or: [{ senderId: args.id }, { receiverId: args.id }]})
+                .populate({path: 'messages', select: 'time body senderId'});
                 }
-            }
+            },
         }
     }
-    }),
+    ),
     mutation: new GraphQLObjectType({
         name: "Mutation",
         fields: {

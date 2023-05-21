@@ -14,7 +14,6 @@ const LoginPage = () => {
   const [isIconActive, setIconActive] = React.useState(true);
   const [username, setUsername] = React.useState('');
   const [password, setPassword] = React.useState('');
-  const [rememberCheckbox, setRememberCheckbox] = React.useState(false);
   const VERIFY_USER = gql`
   query VerifyUser($username: String!, $password: String!) {
     verifyUser(username: $username, password: $password) {
@@ -32,6 +31,7 @@ const LoginPage = () => {
       const { data } = await refetch();
       if (data.verifyUser) {
         console.log(data);
+        sessionStorage.setItem('id', data.verifyUser.id)
         navigate('/AllChats'); // navigate to dashboard route
       }
     } catch (error) {
@@ -43,13 +43,6 @@ const LoginPage = () => {
       sx={{bgcolor: "rgba(0, 24, 57, 0.2)",
         display: "flex", flexDirection: "column",
         alignItems: "center", height: "100%",
-        borderRadius: {
-          xs: "30px",
-          sm: "30px",
-          md: "30px 0 0 30px",
-          lg: "30px 0 0 30px",
-          xl: "30px 0 0 30px",
-        },
       }}>
       <Box width="50%">
         <TopicBox/><br/>
@@ -94,10 +87,6 @@ const LoginPage = () => {
           width="100%"
           color="white"
           >
-          <div style={{ display: "flex" }}>
-            <Checkbox disableRipple sx={{ p: 0, pr: 1 }} onChange={() => setRememberCheckbox(prevState => !prevState)}/>
-            <Typography>Remember me</Typography>
-          </div>
           <Link to="/createAccount" style={{ color: colors.green[500], textDecoration: "none" }}>
             Don't have an account yet?
           </Link>

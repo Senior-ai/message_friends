@@ -13,7 +13,7 @@ const app = express();
 const server = http.createServer();
 const wsServer = new WebSocketServer({server});
 server.listen(6000, () => {
-    console.log('WebSocket Server is listening to port 5000');
+    console.log('WebSocket Server is listening to port 6000');
 })
 app.use(cors());
 connectDB();

@@ -7,8 +7,7 @@ const UserType = new GraphQLObjectType({
     fields: {
         id: {type: GraphQLString},
         username: {type: GraphQLString},
-        password: {type: GraphQLString},
-        groups: {type:GraphQLList(GraphQLString)}
+        password: {type: GraphQLString}
     }
 });
 
@@ -29,8 +28,8 @@ const GroupType = new GraphQLObjectType({
         id: {type: GraphQLString},
         groupName: {type:GraphQLString},
         groupPic: {type:GraphQLString},
-        users: {type: GraphQLList(GraphQLString)},
-        messages: {type: GraphQLList(GraphQLString)}
+        users: {type: GraphQLList(UserType)},
+        messages: {type: GraphQLList(MessageType)}
     }
 })
 
@@ -40,7 +39,7 @@ const ChatType = new GraphQLObjectType({
         id: {type: GraphQLString},
         senderId: {type: GraphQLString},
         receiverId: {type: GraphQLString},
-        messages: {type: GraphQLList(GraphQLString)}
+        messages: {type: GraphQLList(MessageType)}
     }
 })
 module.exports = {UserType, MessageType, GroupType, ChatType}

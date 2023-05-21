@@ -1,3 +1,4 @@
+import React from "react";
 import { Box, ThemeProvider } from "@mui/material";
 import { theme } from "./theme";
 import LoginPage from "../loginComps/LoginPage";

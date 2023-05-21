@@ -6,19 +6,62 @@ import ListItemText from '@mui/material/ListItemText';
 import ListItemAvatar from '@mui/material/ListItemAvatar';
 import Avatar from '@mui/material/Avatar';
 import Typography from '@mui/material/Typography';
-import {gql} from 'apollo-boost';
-import { useQuery } from '@apollo/client';
+import { gql } from 'apollo-boost';
+import { useQuery, ApolloProvider, ApolloClient, createHttpLink, InMemoryCache } from '@apollo/client';
 import { ListItemButton } from '@mui/material';
 
 const TextsList = () => {
+  const endpoint = 'http://localhost:5000/graphql_chat';
+  const id = sessionStorage.getItem('id');
+  //todo - ALSO FETCH GROUPS FROM graphql, move this chat endpoint to chatFEL
+  // const [id, setId] = React.useState('6458c6460a273d30aae9592b');
+  const [data, setData] = React.useState(null);
  const GET_CHATS = gql`
-  query getAllGroups {
-    id
-    messages
-    groupPic
-    groupName
-    users  
+  query getChatsByUserID($id: String!) {
+    getChatsByUserID(id: $id) {
+      senderId
+      receiverId
+        messages {
+        id
+        time
+        body
+        senderId
+      }
+    }
   }`;
+  const createApolloClient = (uri) => {
+    const httpLink = createHttpLink({
+      uri,
+    });
+
+    return new ApolloClient({
+      link: httpLink,
+      cache: new InMemoryCache(),
+    });
+  };
+
+  // const client = createApolloClient(endpoint);
+
+  // const { loading, error, refetch } = useQuery(GET_CHATS, {
+  //   variables: { id },
+  //   client, // Use the Apollo client instance with the specified endpoint URI
+  //   onCompleted: (data) => {
+  //     setData(data);
+  //   },
+  // });
+  // React.useEffect(() => {handleOnload();}, []);
+
+  // const handleOnload = async () => {
+  //   try {
+  //     const { data } = await refetch();
+  //     console.log(data);
+  //     if (data.getChatsByUserID) {
+  //       //console.log(data);
+  //     }
+  //   } catch (error) {
+  //     console.error(error);
+  //   }    
+  // }
   return (
     <List sx={{ padding: '10px', marginTop: '70px',
     marginLeft:'70px', width: '100%', maxWidth:1200 ,bgcolor: 'background.paper' }}>

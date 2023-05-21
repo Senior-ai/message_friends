@@ -1,27 +1,23 @@
 import React from 'react';
-import ReactDOM from 'react-dom/client';
-import './index.css';
+import { createRoot } from 'react-dom/client';
+import { BrowserRouter } from 'react-router-dom';
 import App from './App';
 import { ApolloProvider } from '@apollo/client';
-import { ApolloClient, InMemoryCache} from '@apollo/client';
-import reportWebVitals from './reportWebVitals';
-import { BrowserRouter } from 'react-router-dom';
-const root = ReactDOM.createRoot(document.getElementById('root'));
+import { createApolloClient } from './apolloClient';
 
-const client = new ApolloClient({
-  uri: 'http://localhost:5000/graphql_user/',
-  cache: new InMemoryCache()
-});
+const initialUri = 'http://localhost:5000/graphql_user/';
 
-root.render(
-  <BrowserRouter>
-  <ApolloProvider client={client}>
-    <App />
-  </ApolloProvider>
-  </BrowserRouter>
-);
+function RootComponent() {
+  
+  const client = createApolloClient(initialUri);
 
-// If you want to start measuring performance in your app, pass a function
-// to log results (for example: reportWebVitals(console.log))
-// or send to an analytics endpoint. Learn more: https://bit.ly/CRA-vitals
-reportWebVitals();
+  return (
+    <BrowserRouter>
+      <ApolloProvider client={client}>
+        <App/>
+      </ApolloProvider>
+    </BrowserRouter>
+  );
+}
+
+createRoot(document.getElementById('root')).render(<RootComponent />);
