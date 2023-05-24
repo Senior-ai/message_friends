@@ -17,8 +17,7 @@ const MessageType = new GraphQLObjectType({
         id: {type: GraphQLID},
         time: {type: GraphQLString},
         body: {type: GraphQLString},
-        senderId: {type: GraphQLString},
-        receiverId: {type: GraphQLString}
+        senderId: {type: GraphQLString}
     }
 });
 
@@ -37,8 +36,8 @@ const ChatType = new GraphQLObjectType({
     name: "Chat",
     fields: {
         id: {type: GraphQLString},
-        senderId: {type: GraphQLString},
-        receiverId: {type: GraphQLString},
+        senderId: {type: UserType},
+        receiverId: {type: UserType},
         messages: {type: GraphQLList(MessageType)}
     }
 })

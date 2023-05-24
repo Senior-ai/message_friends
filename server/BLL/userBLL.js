@@ -9,8 +9,7 @@ const userObjectType = new GraphQLInputObjectType({
     name: 'UserObject',
     fields: {
         username: { type: GraphQLString },
-        password: { type: GraphQLString },
-        groups: {type: GraphQLList(GraphQLNonNull(GraphQLString))}
+        password: { type: GraphQLString }
     }
 });
 

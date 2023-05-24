@@ -1,10 +1,9 @@
+const mongoose = require('mongoose');
 const {GraphQLID, GraphQLString,
     GraphQLList, GraphQLType, GraphQLSchema,
     GraphQLNonNull, GraphQLObjectType, GraphQLInputObjectType} = require('graphql');
 const { ChatType, MessageType } = require('../models/graphQLModels');
 const ChatModel = require('../models/chatModel');
-const MessageModel = require('../models/messageModel')
-const mongoose = require('mongoose');
 
 const MessageInputType = new GraphQLInputObjectType({
     name: 'MessageInput',
@@ -47,10 +46,14 @@ const chatSchema = new GraphQLSchema({
         getChatsByUserID: {
             type: GraphQLList(ChatType),
             args: {id: {type: GraphQLString}},
-            resolve: (root, args, context, info) => {
+            resolve: async (root, args, context, info) => {
                 console.log(args.id);
-                return ChatModel.find({$or: [{ senderId: args.id }, { receiverId: args.id }]})
-                .populate({path: 'messages', select: 'time body senderId'});
+                const data = await ChatModel.find()
+                .populate({path: 'senderId', select: 'id username'})
+                .populate({path: 'receiverId', select: 'id username'})
+                .populate({path: 'messages', select: 'id time body senderId'});
+                console.log(data);
+                return data;
                 }
             },
         }
@@ -68,7 +71,6 @@ const chatSchema = new GraphQLSchema({
                 },
                 resolve: (root, args, context, info) => {
                     var newChat = new ChatModel(args);
-                    console.log(newChat);
                     return newChat.save();
                 }
             },

@@ -1,9 +1,10 @@
 const mongoose = require('mongoose');
+const MessageModel = require('./messageModel')
 
 const chatSchema = new mongoose.Schema({
-    senderId: String,
-    receiverId: String,
-    messages: [{type: mongoose.Schema.Types.ObjectId, ref: 'message'}],
+    senderId: {type: mongoose.Schema.Types.ObjectId, ref: 'user'},
+    receiverId: {type: mongoose.Schema.Types.ObjectId, ref: 'user'},
+    messages: [{type: mongoose.Schema.Types.ObjectId, ref: MessageModel}]
 },{versionKey: false})
 
 const ChatModel = mongoose.model('chat', chatSchema);
