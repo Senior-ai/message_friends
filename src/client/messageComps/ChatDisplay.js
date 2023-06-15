@@ -1,8 +1,10 @@
 import React from 'react'
 import { ListItemButton, ListItem, Divider, ListItemText,
      ListItemAvatar, Avatar, Typography } from '@mui/material';
-
+import {Link, useNavigate } from 'react-router-dom';
+    
 const ChatDisplay = (props) => {
+  const navigate = useNavigate();
     const chat = props.chat;
     const messages = chat.messages;
     var displayMsg = '';
@@ -12,16 +14,18 @@ const ChatDisplay = (props) => {
     else
         displayMsg = messages[messages.length - 1].body
 
-
+const handleNavigate = () => {
+  //TODO - Navigate to chats/:id (use chat.id)
+}
   return (
     <React.Fragment>
-        <ListItemButton>
+        <ListItemButton onClick={handleNavigate()}>
     <ListItem alignItems="flex-start">
       <ListItemAvatar>
         <Avatar alt="Remy Sharp" src="/static/images/avatar/1.jpg" />
       </ListItemAvatar>
       <ListItemText
-        primary={chat.senderId + ' - SenderId'} //TODO change it to his name.
+        primary={chat.senderId.username} //TODO - Verify that it displays the correct data. 
         secondary={
           <React.Fragment>
             {/* <Typography

@@ -30,9 +30,9 @@ const LoginPage = () => {
     try {
       const { data } = await refetch();
       if (data.verifyUser) {
-        console.log(data);
-        sessionStorage.setItem('id', data.verifyUser.id)
-        navigate('/AllChats'); // navigate to dashboard route
+        console.log(data.verifyUser[0]);
+        sessionStorage.setItem('id', data.verifyUser[0].id)
+       // navigate('/AllChats'); // navigate to dashboard route
       }
     } catch (error) {
       console.error(error);
