@@ -1,5 +1,5 @@
-import { Box, Button, Checkbox, colors,
-   Typography, TextField, IconButton} from "@mui/material";
+import { Box, Button, colors,
+  TextField, IconButton} from "@mui/material";
 import React from "react";
 import {Link, useNavigate } from 'react-router-dom';
 import TopicBox from "./TopicBox";
@@ -32,7 +32,7 @@ const LoginPage = () => {
       if (data.verifyUser) {
         console.log(data.verifyUser[0]);
         sessionStorage.setItem('id', data.verifyUser[0].id)
-       // navigate('/AllChats'); // navigate to dashboard route
+        navigate('/AllChats'); // navigate to dashboard route
       }
     } catch (error) {
       console.error(error);
@@ -42,7 +42,7 @@ const LoginPage = () => {
     <Box
       sx={{bgcolor: "rgba(0, 24, 57, 0.2)",
         display: "flex", flexDirection: "column",
-        alignItems: "center", height: "100%",
+        alignItems: "center", height: "100%"
       }}>
       <Box width="50%">
         <TopicBox/><br/>
